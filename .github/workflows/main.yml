@@ -75,12 +75,12 @@ jobs:
             cd deploy/ci_cd/actions-runner
             pwd
             if [[ "$(docker ps -q --filter ancestor=mysql:8.0)" ]]; then
-            docker rm -f $(docker ps -qa --filter ancestor=mysql:8.0)
+              docker rm -f $(docker ps -qa --filter ancestor=mysql:8.0)
             fi
             echo "pass mysql-container"
 
-            if [[ "$(docker ps -qa --filter ancestor-backend-deploy-test/backend-deploy-test-server:latest)" ]]; then
-              docker rm -f $(docker ps -qa --filter ancestor-backend-deploy-test/backend-deploy-test-server:latest)
+            if [[ "$(docker ps -qa --filter=status=exited --filter ancestor=backend-deploy-test/backend-deploy-test-server:latest)" ]]; then
+              docker rm -f $(docker ps -qa --filter=status=exited --filter ancestor=backend-deploy-test/backend-deploy-test-server:latest)
             fi
             echo "pass backend-deploy-test/backend-deploy-test-server:latest"
 
