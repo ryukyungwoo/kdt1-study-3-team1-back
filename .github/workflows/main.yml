@@ -72,7 +72,7 @@ jobs:
           script: |
             pwd
             ls -al
-            cd actions-runner
+            cd deploy/ci_cd/actions-runner
             pwd
             if [[ "$(docker ps -q --filter ancestor=mysql:8.0)" ]]; then
             fi
