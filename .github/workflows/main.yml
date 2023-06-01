@@ -74,14 +74,18 @@ jobs:
             ls -al
             cd deploy/ci_cd/actions-runner
             pwd
-            if [[ "$(docker ps -q --filter ancestor=mysql:8.0)" ]]; then
+            if [[ "$(docker ps -q --filter ancestor=mysql:8.0)" ]]; then            
+              docker rm -f $(docker ps -qa --filter ancestor=mysql:8.0)
             fi
-            docker rm -f $(docker ps -qa --filter ancestor=mysql:8.0)
             echo "pass mysql-container"
+            
             if [[ "$(docker ps -qa --filter ancestor-backend-deploy-test/backend-deploy-test-server:latest)" ]]; then docker rm -f $(docker ps -qa --filter ancestor-backend-deploy-test/backend-deploy-test-server:latest)
             fi
             echo "pass backend-deploy-test/backend-deploy-test-server:latest"
+            
             echo ${{ secrets.GHCR_TOKEN }} | docker login ghcr.io -u ${{ github.repository_owner }} --password-stdin
+            
             docker pull ghcr.io/ryukyungwoo/kdt1-study-3-team1-back:latest
+            
             docker image prune -f
             docker logout
