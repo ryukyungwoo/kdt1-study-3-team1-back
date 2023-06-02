@@ -92,7 +92,7 @@ jobs:
             docker image prune -f
             docker logout
             
-            docker compose -d
+            docker compose up -d
 
         
       
